@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Usuario</title>
+    <!-- Corregir la ruta del CSS - Eliminar la barra inicial -->
+    <link rel="stylesheet" href="../archivos_css/registrarDatosUser.css">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Ondas decorativas de fondo -->
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+    
+    <div class="contenedor-principal">
+        <!-- Barra superior con degradado -->
+        <div class="barra-superior"></div>
+        
+        <!-- Logo -->
+        <div class="logo-contenedor">
+            <img src="../logo principal.svg" alt="Logo de empresa de correo" class="logo-imagen" id="logoAnimado">
+        </div>
+
+        <!-- Formulario de Registro -->
+        <div class="sesion-contenedor">
+            <h1 class="sesion-titulo">Registrar Usuario</h1>
+            <form class="formulario-registro" onsubmit="return registrarUsuario(event)">
+                <!-- Nombres -->
+                <div class="grupo-campo">
+                    <label class="etiqueta-campo">Nombres</label>
+                    <div class="campo-con-icono">
+                        <i class="fas fa-user icono-campo"></i>
+                        <input class="campo-texto" placeholder="Ejemplo: Pepito" type="text" name="nombre">
+                    </div>
+                </div>
+
+                <!-- Apellidos -->
+                <div class="grupo-campo">
+                    <label class="etiqueta-campo">Apellidos</label>
+                    <div class="campo-con-icono">
+                        <i class="fas fa-user-tag icono-campo"></i>
+                        <input class="campo-texto" placeholder="Ejemplo: García Itoshi" type="text" name="apellidos">
+                    </div>
+                </div>
+
+                <!-- DNI -->
+                <div class="grupo-campo">
+                    <label class="etiqueta-campo">Número de DNI</label>
+                    <div class="campo-con-icono">
+                        <i class="fas fa-id-card icono-campo"></i>
+                        <input class="campo-texto" placeholder="Ejemplo: 74622289" type="number" name="dni" min="1" id="dniField">
+                    </div>
+                </div>
+
+                <!-- Fecha de Nacimiento -->
+                <div class="grupo-campo">
+                    <label class="etiqueta-campo">Fecha de Nacimiento</label>
+                    <div class="campo-con-icono">
+                        <i class="fas fa-calendar-alt icono-campo"></i>
+                        <input class="campo-texto" type="date" name="fecha_nac">
+                    </div>
+                </div>
+
+                <!-- Teléfono -->
+                <div class="grupo-campo">
+                    <label class="etiqueta-campo">Número Telefónico</label>
+                    <div class="campo-con-icono">
+                        <i class="fas fa-phone icono-campo"></i>
+                        <input class="campo-texto" placeholder="Ejemplo: 989216756" type="tel" name="celular" id="phoneField">
+                    </div>
+                </div>
+
+                <!-- Botones -->
+                <div class="grupo-botones">
+                    <button class="boton-reset" type="reset">
+                        <i class="fas fa-eraser"></i>
+                        <span>Borrar</span>
+                    </button>
+                    <button class="boton-registro" type="submit">
+                        <span>Enviar</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Script para animaciones -->
+    <script>
+        // Función para simular el registro sin validación real
+        function registrarUsuario(event) {
+            event.preventDefault();
+            
+            // Simulamos el envío del formulario
+            const botonRegistro = document.querySelector('.boton-registro');
+            const textoOriginal = botonRegistro.innerHTML;
+            
+            botonRegistro.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+            botonRegistro.disabled = true;
+            
+            // Simulamos un tiempo de carga
+            setTimeout(() => {
+                // Redirigir a la siguiente página
+                window.location.href = "mostrarMensajes.html";
+            }, 1500);
+            
+            return false;
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animación del logo
+            const logo = document.getElementById('logoAnimado');
+            if (logo) {
+                logo.addEventListener('mouseenter', function() {
+                    this.classList.add('logo-pulse');
+                });
+                
+                logo.addEventListener('mouseleave', function() {
+                    this.classList.remove('logo-pulse');
+                });
+                
+                // Añadir efecto de clic al logo
+                logo.addEventListener('click', function() {
+                    createParticles(this.getBoundingClientRect().left + this.offsetWidth/2, 
+                                   this.getBoundingClientRect().top + this.offsetHeight/2);
+                });
+            }
+            
+            // Animación de campos de texto
+            const inputFields = document.querySelectorAll('.campo-texto');
+            inputFields.forEach(field => {
+                field.addEventListener('focus', function() {
+                    this.parentElement.parentElement.classList.add('campo-activo');
+                    const icon = this.parentElement.querySelector('.icono-campo');
+                    if (icon) {
+                        icon.classList.add('icono-activo');
+                    }
+                });
+                
+                field.addEventListener('blur', function() {
+                    if (this.value === '') {
+                        this.parentElement.parentElement.classList.remove('campo-activo');
+                        const icon = this.parentElement.querySelector('.icono-campo');
+                        if (icon) {
+                            icon.classList.remove('icono-activo');
+                        }
+                    }
+                });
+            });
+            
+            // Validación de DNI
+            const dniField = document.getElementById('dniField');
+            if (dniField) {
+                dniField.addEventListener('input', function() {
+                    if (this.value.length > 8) {
+                        this.value = this.value.slice(0, 8);
+                    }
+                });
+            }
+            
+            // Validación de teléfono
+            const phoneField = document.getElementById('phoneField');
+            if (phoneField) {
+                phoneField.addEventListener('input', function() {
+                    if (this.value.length > 9) {
+                        this.value = this.value.slice(0, 9);
+                    }
+                    // Solo permitir números
+                    this.value = this.value.replace(/[^0-9]/g, '');
+                });
+            }
+            
+            // Efecto de partículas al hacer clic en los botones
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.addEventListener('mousedown', function(e) {
+                    createParticles(e.clientX, e.clientY);
+                });
+            });
+            
+            // Función para crear partículas
+            function createParticles(x, y) {
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement('span');
+                    particle.className = 'particle-click';
+                    
+                    // Colores de la marca
+                    const colors = ['#FF4B6E', '#FF8E53', '#FFA07A'];
+                    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    // Tamaño aleatorio
+                    const size = Math.floor(Math.random() * 8 + 3);
+                    
+                    // Posición y estilo
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.background = randomColor;
+                    particle.style.position = 'fixed';
+                    particle.style.borderRadius = '50%';
+                    particle.style.left = `${x}px`;
+                    particle.style.top = `${y}px`;
+                    particle.style.pointerEvents = 'none';
+                    particle.style.zIndex = '1000';
+                    
+                    document.body.appendChild(particle);
+                    
+                    // Animación
+                    const destinationX = x + (Math.random() - 0.5) * 100;
+                    const destinationY = y + (Math.random() - 0.5) * 100;
+                    const rotation = Math.random() * 520;
+                    
+                    particle.style.transition = 'all 0.8s cubic-bezier(0, 0.9, 0.57, 1)';
+                    
+                    setTimeout(() => {
+                        particle.style.transform = `translate(${destinationX - x}px, ${destinationY - y}px) rotate(${rotation}deg)`;
+                        particle.style.opacity = '0';
+                    }, 10);
+                    
+                    setTimeout(() => {
+                        particle.remove();
+                    }, 800);
+                }
+            }
+            
+            // Validación visual del formulario (solo para efectos visuales)
+            const form = document.querySelector('.formulario-registro');
+            form.addEventListener('submit', function(e) {
+                // La validación real se maneja en la función registrarUsuario
+                // Esta parte es solo para efectos visuales si el usuario intenta enviar el formulario
+                
+                // Efecto visual para el DNI
+                const dniField = document.getElementById('dniField');
+                if (dniField && dniField.value.length > 0 && dniField.value.length !== 8) {
+                    dniField.parentElement.parentElement.classList.add('campo-error');
+                    
+                    // Crear mensaje de error si no existe
+                    if (!dniField.parentElement.parentElement.querySelector('.mensaje-error')) {
+                        const errorMsg = document.createElement('div');
+                        errorMsg.className = 'mensaje-error';
+                        errorMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> El DNI debe tener 8 dígitos.';
+                        dniField.parentElement.parentElement.appendChild(errorMsg);
+                    }
+                    
+                    // Efecto de sacudida en el formulario
+                    form.classList.add('shake');
+                    setTimeout(() => {
+                        form.classList.remove('shake');
+                    }, 500);
+                }
+                
+                // Efecto visual para el teléfono
+                const phoneField = document.getElementById('phoneField');
+                if (phoneField && phoneField.value.length > 0 && phoneField.value.length !== 9) {
+                    phoneField.parentElement.parentElement.classList.add('campo-error');
+                    
+                    // Crear mensaje de error si no existe
+                    if (!phoneField.parentElement.parentElement.querySelector('.mensaje-error')) {
+                        const errorMsg = document.createElement('div');
+                        errorMsg.className = 'mensaje-error';
+                        errorMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> El teléfono debe tener 9 dígitos.';
+                        phoneField.parentElement.parentElement.appendChild(errorMsg);
+                    }
+                    
+                    // Efecto de sacudida en el formulario
+                    form.classList.add('shake');
+                    setTimeout(() => {
+                        form.classList.remove('shake');
+                    }, 500);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

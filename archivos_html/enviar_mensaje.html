@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enviar Mensaje | Sistema de Mensajería</title>
+    <link rel="stylesheet" href="../archivos_css/enviarMensaje.css">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="contenedor-principal">
+        <!-- Barra superior con degradado -->
+        <div class="barra-superior"></div>
+        
+        <!-- Encabezado con bienvenida y opciones -->
+        <div class="encabezado">
+            <div class="bienvenida-usuario">
+                <span class="saludo-texto">¡Hola de nuevo!</span>
+                <span class="nombre-usuario" id="nombreUsuario">Usuario Ejemplo</span>
+            </div>
+            <div class="acciones-usuario">
+                <a href="mostrarMensajes.html" class="boton-accion boton-notificaciones">
+                    <img src="../imagenes/logocanpana.png" alt="Notificaciones" class="icono-campana">
+                    <span>Ver mensajes</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Contenedor del formulario -->
+        <div class="contenedor-formulario">
+            <h2 class="titulo-formulario">Enviar un nuevo mensaje</h2>
+            
+            <form class="formulario-mensaje" onsubmit="return enviarMensaje(event)">
+                <!-- Destinatario -->
+                <div class="grupo-campo">
+                    <label class="etiqueta-campo">
+                        <i class="fas fa-user icono"></i> Destinatario
+                    </label>
+                    <select name="receptor" id="destinatario" class="campo-texto">
+                        <option value="1">Ana García</option>
+                        <option value="2">Carlos Rodríguez</option>
+                        <option value="3">Laura Martínez</option>
+                        <option value="4">Miguel Sánchez</option>
+                        <option value="5">Elena López</option>
+                    </select>
+                </div>
+                
+                <!-- Asunto -->
+                <div class="grupo-campo">
+                    <label class="etiqueta-campo">
+                        <i class="fas fa-heading icono"></i> Asunto
+                    </label>
+                    <input class="campo-texto" type="text" placeholder="Escribe el asunto del mensaje" name="asunto">
+                </div>
+                
+                <!-- Mensaje -->
+                <div class="grupo-campo">
+                    <label class="etiqueta-campo">
+                        <i class="fas fa-comment-alt icono"></i> Mensaje
+                    </label>
+                    <textarea class="campo-texto campo-mensaje" placeholder="Escribe tu mensaje aquí..." name="mensaje"></textarea>
+                </div>
+                
+                <!-- Botones -->
+                <div class="grupo-botones">
+                    <button class="boton-enviar" type="submit">
+                        <i class="fas fa-paper-plane"></i> Enviar mensaje
+                    </button>
+                    <button class="boton-reset" type="reset">
+                        <i class="fas fa-times"></i> Borrar
+                    </button>
+                </div>
+                
+                <!-- Cerrar sesión sutil -->
+                <div class="cerrar-sesion-sutil">
+                    <a href="../index.html" class="enlace-cerrar-sesion">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                    </a>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Pie de página -->
+        <div class="pie-pagina">
+            <p class="copyright">© 2023 Sistema de Mensajería</p>
+            <div class="enlaces-pie">
+                <a href="#" class="enlace-pie">Ayuda</a>
+                <a href="#" class="enlace-pie">Privacidad</a>
+                <a href="#" class="enlace-pie">Términos</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script para animaciones e interactividad -->
+    <script>
+        // Función para enviar mensaje
+        function enviarMensaje(event) {
+            event.preventDefault();
+            
+            // Simulamos el envío del formulario
+            const botonEnviar = document.querySelector('.boton-enviar');
+            const textoOriginal = botonEnviar.innerHTML;
+            
+            botonEnviar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+            botonEnviar.disabled = true;
+            
+            // Simulamos un tiempo de carga
+            setTimeout(() => {
+                // Mostrar mensaje de éxito
+                alert('¡Mensaje enviado con éxito!');
+                
+                // Redirigir a la página de mensajes
+                window.location.href = "mostrarMensajes.html";
+            }, 1500);
+            
+            return false;
+        }
+        
+        // Animación interactiva para el nombre de usuario
+        document.addEventListener('DOMContentLoaded', function() {
+            const nombreUsuario = document.getElementById('nombreUsuario');
+            
+            // Efecto de partículas al hacer clic en el nombre
+            nombreUsuario.addEventListener('click', function(e) {
+                // Crear efecto de partículas
+                for (let i = 0; i < 20; i++) {
+                    createParticle(e.clientX, e.clientY);
+                }
+            });
+            
+            // Función para crear partículas
+            function createParticle(x, y) {
+                const particle = document.createElement('span');
+                particle.className = 'particle';
+                
+                // Estilos para las partículas
+                particle.style.position = 'fixed';
+                particle.style.width = '8px';
+                particle.style.height = '8px';
+                particle.style.borderRadius = '50%';
+                particle.style.background = `linear-gradient(90deg, 
+                    var(--color-gradiente-inicio), 
+                    var(--color-gradiente-fin))`;
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                particle.style.pointerEvents = 'none';
+                particle.style.zIndex = '1000';
+                
+                // Añadir al DOM
+                document.body.appendChild(particle);
+                
+                // Animación de la partícula
+                const size = Math.random() * 15 + 5;
+                const destinationX = x + (Math.random() - 0.5) * 100;
+                const destinationY = y + (Math.random() - 0.5) * 100;
+                const rotation = Math.random() * 520;
+                const delay = Math.random() * 200;
+                
+                // Aplicar animación con CSS
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.transition = `all 0.6s ease-out ${delay}ms`;
+                
+                // Iniciar animación después de un pequeño retraso
+                setTimeout(() => {
+                    particle.style.transform = `translate(${destinationX - x}px, ${destinationY - y}px) rotate(${rotation}deg)`;
+                    particle.style.opacity = '0';
+                }, 10);
+                
+                // Eliminar partícula después de la animación
+                setTimeout(() => {
+                    particle.remove();
+                }, 1000);
+            }
+            
+            // Efecto de brillo al pasar el cursor
+            let intervalId;
+            nombreUsuario.addEventListener('mouseenter', function() {
+                let hue = 0;
+                intervalId = setInterval(() => {
+                    hue = (hue + 1) % 360;
+                    nombreUsuario.style.filter = `drop-shadow(0 0 5px hsl(${hue}, 100%, 70%))`;
+                }, 30);
+            });
+            
+            nombreUsuario.addEventListener('mouseleave', function() {
+                clearInterval(intervalId);
+                nombreUsuario.style.filter = '';
+            });
+            
+            // Animación para el botón de enviar
+            const botonEnviar = document.querySelector('.boton-enviar');
+            botonEnviar.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+                this.style.boxShadow = '0 4px 12px rgba(255, 75, 110, 0.4)';
+            });
+            
+            botonEnviar.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+                this.style.boxShadow = '0 2px 6px rgba(255, 75, 110, 0.3)';
+            });
+            
+            // Efecto para el botón de reset
+            const botonReset = document.querySelector('.boton-reset');
+            botonReset.addEventListener('click', function(e) {
+                // Crear efecto de partículas
+                for (let i = 0; i < 10; i++) {
+                    createParticle(e.clientX, e.clientY);
+                }
+            });
+            
+            // Efecto para el botón de notificaciones
+            const botonNotificaciones = document.querySelector('.boton-notificaciones');
+            botonNotificaciones.addEventListener('mouseenter', function() {
+                const iconoCampana = this.querySelector('.icono-campana');
+                if (iconoCampana) {
+                    iconoCampana.style.animation = 'ring 0.6s ease-in-out';
+                }
+            });
+            
+            botonNotificaciones.addEventListener('mouseleave', function() {
+                const iconoCampana = this.querySelector('.icono-campana');
+                if (iconoCampana) {
+                    iconoCampana.style.animation = '';
+                }
+            });
+            
+            // Animación para los campos de texto
+            const camposTexto = document.querySelectorAll('.campo-texto');
+            camposTexto.forEach(campo => {
+                campo.addEventListener('focus', function() {
+                    this.style.borderColor = 'var(--color-primario)';
+                    this.style.boxShadow = '0 0 0 3px rgba(255, 75, 110, 0.2)';
+                });
+                
+                campo.addEventListener('blur', function() {
+                    this.style.borderColor = 'var(--color-borde)';
+                    this.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.05)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,651 @@
+/* Variables de color (basadas en index.css) */
+:root {
+    --color-primario: #FF4B6E; /* Rosa intenso */
+    --color-secundario: #FFFFFF; /* Blanco */
+    --color-fondo: #FFF5F7; /* Fondo rosa muy suave */
+    --color-texto: #333333; /* Texto oscuro */
+    --color-boton-hover: #E63D5E; /* Rosa oscuro para hover */
+    --color-gradiente-inicio: #FF8E53; /* Naranja cálido */
+    --color-gradiente-fin: #FF4B6E; /* Rosa intenso */
+
+    /* Colores adicionales para mejorar la interfaz */
+    --color-gris-claro: #F0F2F5; /* Fondo gris claro (estilo Facebook) */
+    --color-borde: #DADDE1; /* Color de bordes sutil */
+    --color-texto-secundario: #65676B; /* Texto secundario */
+    --color-azul-acento: #1877F2; /* Azul acento (estilo Facebook) */
+    --color-verde: #42B72A; /* Verde para acciones positivas */
+    --color-sombra: rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos Globales */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: url('../imagenes/2.svg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 245, 247, 0.85);
+    z-index: -1;
+    backdrop-filter: blur(5px);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 75, 110, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 75, 110, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 75, 110, 0); }
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Contenedor Principal */
+.contenedor-principal {
+    background-color: var(--color-secundario);
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    width: 100%;
+    max-width: 650px;
+    overflow: hidden;
+    animation: fadeIn 0.6s ease-out;
+    border: 1px solid var(--color-borde);
+    margin: 20px;
+    position: relative;
+}
+
+/* Barra superior con degradado */
+.barra-superior {
+    height: 6px;
+    background: linear-gradient(90deg, var(--color-gradiente-inicio), var(--color-gradiente-fin));
+    background-size: 200% 200%;
+    animation: gradientShift 5s ease infinite;
+}
+
+/* Encabezado con bienvenida y opciones */
+.encabezado {
+    padding: 24px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--color-borde);
+    background-color: var(--color-secundario);
+}
+
+.bienvenida-usuario {
+    display: flex;
+    flex-direction: column;
+}
+
+.saludo-texto {
+    font-size: 14px;
+    color: var(--color-texto-secundario);
+    margin-bottom: 4px;
+}
+
+/* Modificaciones para el nombre de usuario con animación al pasar el cursor */
+.nombre-usuario {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--color-primario);
+    position: relative;
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    background-size: 200% auto;
+    background-position: 0 100%;
+    animation: shimmer 3s infinite;
+    text-shadow: 0 0 5px rgba(255, 75, 110, 0.1);
+}
+
+@keyframes shimmer {
+    0% {
+        background-image: linear-gradient(90deg, 
+            rgba(255, 142, 83, 0) 0%, 
+            rgba(255, 142, 83, 0.2) 50%, 
+            rgba(255, 75, 110, 0) 100%);
+        background-position: -100% 0;
+    }
+    100% {
+        background-image: linear-gradient(90deg, 
+            rgba(255, 142, 83, 0) 0%, 
+            rgba(255, 142, 83, 0.2) 50%, 
+            rgba(255, 75, 110, 0) 100%);
+        background-position: 200% 0;
+    }
+}
+
+.nombre-usuario:hover {
+    background: linear-gradient(90deg, var(--color-gradiente-inicio), var(--color-gradiente-fin));
+    color: var(--color-secundario);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 4px 12px rgba(255, 75, 110, 0.3);
+    animation: none;
+}
+
+.nombre-usuario::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-gradiente-inicio), var(--color-gradiente-fin));
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.nombre-usuario:hover::after {
+    width: 100%;
+}
+
+/* Estilos para el botón de notificaciones con campana */
+.boton-notificaciones {
+    background-color: var(--color-gris-claro);
+    color: var(--color-texto);
+    border: 1px solid var(--color-borde);
+    position: relative;
+    padding-left: 45px;  /* Aumentado de 40px a 45px */
+}
+
+.boton-notificaciones:hover {
+    background-color: #E4E6E9;
+}
+
+.icono-campana {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    transition: transform 0.3s ease;
+    margin-right: 10px;  /* Añadido margen derecho */
+}
+
+/* Añadido espacio entre el icono y el texto */
+.boton-notificaciones span {
+    margin-left: 5px;
+}
+
+.boton-notificaciones:hover .icono-campana {
+    transform: translateY(-50%) scale(1.1);
+    animation: ring 0.6s ease-in-out;
+}
+
+@keyframes ring {
+    0%, 100% {
+        transform: translateY(-50%) rotate(0);
+    }
+    20%, 60% {
+        transform: translateY(-50%) rotate(-10deg);
+    }
+    40%, 80% {
+        transform: translateY(-50%) rotate(10deg);
+    }
+}
+
+/* Animación para el contenedor de bienvenida */
+.bienvenida-usuario {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.bienvenida-usuario::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 142, 83, 0.1) 0%, rgba(255, 75, 110, 0.1) 50%, transparent 70%);
+    opacity: 0;
+    transform: scale(0.5);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.bienvenida-usuario:hover::before {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Estilo para el botón de cerrar sesión en el pie del formulario */
+.cerrar-sesion-sutil {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px dashed var(--color-borde);
+}
+
+.enlace-cerrar-sesion {
+    color: var(--color-texto-secundario);
+    font-size: 13px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.enlace-cerrar-sesion:hover {
+    color: var(--color-primario);
+    background-color: var(--color-fondo);
+}
+
+.enlace-cerrar-sesion i {
+    font-size: 12px;
+}
+
+.acciones-usuario {
+    display: flex;
+    gap: 12px;
+}
+
+.boton-accion {
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.boton-notificaciones {
+    background-color: var(--color-gris-claro);
+    color: var(--color-texto);
+    border: 1px solid var(--color-borde);
+}
+
+.boton-notificaciones:hover {
+    background-color: #E4E6E9;
+}
+
+.boton-cerrar-sesion {
+    background-color: transparent;
+    color: var(--color-primario);
+    border: 1px solid var(--color-primario);
+}
+
+.boton-cerrar-sesion:hover {
+    background-color: var(--color-primario);
+    color: var(--color-secundario);
+    box-shadow: 0 2px 8px rgba(255, 75, 110, 0.3);
+}
+
+/* Iconos para botones */
+.icono {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Contenedor del formulario */
+.contenedor-formulario {
+    padding: 30px;
+    background-color: var(--color-secundario);
+}
+
+/* Formulario de mensaje */
+.formulario-mensaje {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.titulo-formulario {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-texto);
+    margin: 0 0 15px 0;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--color-borde);
+    position: relative;
+}
+
+.titulo-formulario::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-gradiente-inicio), var(--color-gradiente-fin));
+    border-radius: 3px;
+}
+
+/* Grupo de campos (etiqueta + input) */
+.grupo-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+}
+
+.etiqueta-campo {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-texto);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.campo-texto, select.campo-texto {
+    background-color: var(--color-secundario);
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 15px;
+    color: var(--color-texto);
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.campo-texto:focus, select.campo-texto:focus {
+    border-color: var(--color-primario);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 75, 110, 0.2);
+}
+
+/* Estilo específico para el select */
+select.campo-texto {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23333333' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 40px;
+}
+
+/* Campo de mensaje (textarea) */
+.campo-mensaje {
+    min-height: 150px;
+    resize: vertical;
+    font-family: inherit;
+    line-height: 1.6;
+}
+
+/* Botones */
+.grupo-botones {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.boton-enviar {
+    background: linear-gradient(90deg, var(--color-gradiente-inicio), var(--color-gradiente-fin));
+    color: var(--color-secundario);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 6px rgba(255, 75, 110, 0.3);
+}
+
+.boton-enviar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 75, 110, 0.4);
+}
+
+.boton-enviar:active {
+    transform: translateY(0);
+}
+
+.boton-reset {
+    background-color: var(--color-secundario);
+    color: var(--color-texto-secundario);
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.boton-reset:hover {
+    background-color: var(--color-gris-claro);
+    color: var(--color-texto);
+}
+
+/* Efectos de enfoque para accesibilidad */
+.campo-texto:focus, 
+select.campo-texto:focus, 
+.boton-enviar:focus, 
+.boton-reset:focus,
+.boton-accion:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 75, 110, 0.3);
+}
+
+/* Pie de página */
+.pie-pagina {
+    padding: 15px 30px;
+    background-color: var(--color-gris-claro);
+    border-top: 1px solid var(--color-borde);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: var(--color-texto-secundario);
+}
+
+.copyright {
+    margin: 0;
+}
+
+.enlaces-pie {
+    display: flex;
+    gap: 15px;
+}
+
+.enlace-pie {
+    color: var(--color-primario);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.enlace-pie:hover {
+    color: var(--color-boton-hover);
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .contenedor-principal {
+        margin: 15px;
+        border-radius: 12px;
+    }
+    
+    .encabezado {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 20px;
+    }
+    
+    .acciones-usuario {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .contenedor-formulario {
+        padding: 20px;
+    }
+    
+    .grupo-botones {
+        flex-direction: column;
+    }
+    
+    .boton-enviar, .boton-reset {
+        width: 100%;
+    }
+    
+    .pie-pagina {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+        padding: 15px;
+    }
+}
+
+/* Enhanced Responsive Design for All Devices */
+@media (max-width: 576px) {
+    .contenedor-principal {
+        margin: 10px;
+        max-width: 100%;
+    }
+    
+    .barra-superior {
+        height: 4px;
+    }
+    
+    .encabezado {
+        padding: 15px;
+    }
+    
+    .nombre-usuario {
+        font-size: 20px;
+    }
+    
+    .boton-accion {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+    
+    .contenedor-formulario {
+        padding: 15px;
+    }
+    
+    .titulo-formulario {
+        font-size: 16px;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+    }
+    
+    .etiqueta-campo {
+        font-size: 13px;
+    }
+    
+    .campo-texto, select.campo-texto {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+    
+    .campo-mensaje {
+        min-height: 120px;
+    }
+    
+    .formulario-mensaje {
+        gap: 15px;
+    }
+}
+
+@media (max-width: 360px) {
+    .encabezado {
+        padding: 12px;
+    }
+    
+    .saludo-texto {
+        font-size: 12px;
+    }
+    
+    .nombre-usuario {
+        font-size: 18px;
+    }
+    
+    .boton-accion {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+    
+    .contenedor-formulario {
+        padding: 12px;
+    }
+    
+    .titulo-formulario {
+        font-size: 15px;
+    }
+    
+    .campo-texto, select.campo-texto {
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+    
+    .boton-enviar, .boton-reset {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .enlaces-pie {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+/* Landscape orientation adjustments */
+@media (max-height: 500px) and (orientation: landscape) {
+    body {
+        align-items: flex-start;
+    }
+    
+    .contenedor-principal {
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    
+    .encabezado {
+        flex-direction: row;
+        padding: 12px 20px;
+    }
+    
+    .contenedor-formulario {
+        padding: 15px 20px;
+    }
+    
+    .campo-mensaje {
+        min-height: 80px;
+    }
+    
+    .grupo-botones {
+        flex-direction: row;
+    }
+}
